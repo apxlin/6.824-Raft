@@ -1,4 +1,6 @@
 # 6.824-Raft
+Raft note
+
 There are three roles in Raft algorithm, Follower, Candidate, Leader, each node store currentTerm, votedFor and log.
 There are Two RPC in this protocol , RequestVote and AppendEntries.
 
@@ -13,7 +15,7 @@ First, With the agreement of majority of the nodes, the node is elected as the l
 Second, Received the AppendEntries message from another node indicates that it is the leader. If the current candidate node thinks that the leader is legal (term> currentTerm in the message carrying parameters), it will switch itself to the follower state.
 Third, If the majority of votes are not received before the timer expires, a new round of elections will start.
 
-Now I want to introduce the detail of RequestVote.
+The detail of RequestVote.
 When a node receives a RequestVote message, it will make the following judgments:
 
 If the term carried by the RPC smaller than the node’s currentTerm, it will return currentTerm and reject the voting request: (currentTerm, false), this node will keep the current node state unchanged.
@@ -34,7 +36,7 @@ So from such RPC, we will elect a leader form candidate.
 When a node step into leader state, it will Initialize the nextIndex and matchIndex for all other nodes.
 Regularly send AppendEntries messages (heartbeat messages) to each node to maintain its leadership.
 
-Now I want to introduce the detail of AppendEntries.
+The detail of AppendEntries.
 When a node receives a AppendEntries message, it will make the following judgments:
 
 If the term carried by the RPC smaller than the node’s currentTerm, it will return currentTerm and reject the request: (currentTerm, false), this node will keep the current node state unchanged.
